@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nf start",
-    "server": "nodemon server/index.js",
-    "client": "parcel serve client/react.html --port 3001"
+    "server": "nodemon server/app.js",
+    "client": "parcel serve client/app.html --port 3001"
   },
   "keywords": [],
   "author": "",
