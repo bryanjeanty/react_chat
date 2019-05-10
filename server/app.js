@@ -36,21 +36,21 @@ http.listen(PORT, (request, response) => console.log(`Running on ${root}`));
 // connect to socket io
 io.on("connection", server => {
   // create function to send status (of chat object) to client
-  const sendStatus = chatStatus => {
-    server.emit("status", chatStatus);
+  const sendStatus = status => {
+    server.emit("status", status);
   };
 
   // get chats from mongo collection
   Chat.find()
     .limit(100)
     .sort({ _id: 1 })
-    .exec((error, chat) => {
+    .exec((error, chats) => {
       if (error) {
         throw error;
       }
 
-      // send chat object to the client
-      server.emit("output", chat);
+      // send chats array to the client
+      server.emit("output", chats);
     });
 
   // handle input event (chat object) from the client
@@ -64,7 +64,7 @@ io.on("connection", server => {
       // otherwise, insert the message into the database
       Chat.insertMany({ name, message }, () => {
         /****  THE LINE BELOW HAS BEEN CHANGED FROM THE PREVIOUS FILE EXAMPLE  *****/
-        server.emit("output", chat);
+        server.emit("output", [chat]);
 
         // send success status object to client
         sendStatus({ message: "Message sent", clear: true });
