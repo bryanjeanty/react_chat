@@ -63,7 +63,7 @@ io.on("connection", server => {
     } else {
       // otherwise, insert the message into the database
       Chat.insertMany({ name, message }, () => {
-        /****  THE LINE BELOW HAS BEEN CHANGED FROM THE PREVIOUS FILE EXAMPLE  *****/
+        // send the chat you just received back as an array of one chat object
         server.emit("output", [chat]);
 
         // send success status object to client

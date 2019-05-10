@@ -85,49 +85,53 @@ class HelloMessage extends React.Component {
   render() {
     const { name, message, status, chats } = this.state;
 
+    const messageStyles = { height: 300 };
+
     return (
-      <div className="row">
-        <div className="col-md-6 offset-md-3 col-sm-12">
-          <h1 className="text-center">
-            Ren Chat
-            <button className="btn btn-danger" onClick={this.clearChat}>
-              Clear
-            </button>
-          </h1>
-          <div>{status}</div>
-          <div>
-            <input
-              type="text"
-              name="name"
-              value={name}
-              className="form-control"
-              placeholder="Enter a name..."
-              onChange={this.handleChange}
-            />
-            <br />
-            <div className="card">
-              <div id="messages" className="card-block">
-                {chats ? (
-                  chats.map(chat => (
-                    <div key={chats.indexOf(chat)}>
-                      <strong>{`${chat.name}: `}</strong>
-                      {chat.message}
-                    </div>
-                  ))
-                ) : (
-                  <div />
-                )}
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 offset-md-3 col-sm-12">
+            <h1 className="text-center">
+              Ren Chat
+              <button className="btn btn-danger" onClick={this.clearChat}>
+                Clear
+              </button>
+            </h1>
+            <div>{status}</div>
+            <div>
+              <input
+                type="text"
+                name="name"
+                value={name}
+                className="form-control"
+                placeholder="Enter a name..."
+                onChange={this.handleChange}
+              />
+              <br />
+              <div className="card">
+                <div style={messageStyles} className="card-block">
+                  {chats ? (
+                    chats.map(chat => (
+                      <div key={chats.indexOf(chat)}>
+                        <strong>{`${chat.name}: `}</strong>
+                        {chat.message}
+                      </div>
+                    ))
+                  ) : (
+                    <div />
+                  )}
+                </div>
               </div>
+              <br />
+              <textarea
+                name="message"
+                value={message}
+                className="form-control"
+                placeholder="Enter a message..."
+                onChange={this.handleChange}
+                onKeyDown={this.sendMessage}
+              />
             </div>
-            <br />
-            <textarea
-              name="message"
-              value={message}
-              className="form-control"
-              placeholder="Enter a message..."
-              onChange={this.handleChange}
-              onKeyDown={this.sendMessage}
-            />
           </div>
         </div>
       </div>
@@ -135,5 +139,5 @@ class HelloMessage extends React.Component {
   }
 }
 
-const mountNode = document.getElementById("container");
+const mountNode = document.getElementById("app");
 ReactDOM.render(<HelloMessage />, mountNode);
